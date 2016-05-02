@@ -8,7 +8,7 @@ import java.util.UUID;
  */
 public class Task {
 
-    private UUID taskID;
+    private Integer taskID;
     private String taskName;
     private Date dateOfStart;
     private Integer noOfCompletedDays;
@@ -17,6 +17,14 @@ public class Task {
     {
         dateOfStart=new Date();
         noOfCompletedDays=0;
+    }
+
+    public Task(Integer taskID,String taskName,Date dateOfStart,Integer noOfCompletedDays)
+    {
+        this.taskID=taskID;
+        this.taskName=taskName;
+        this.dateOfStart=dateOfStart;
+        this.noOfCompletedDays=noOfCompletedDays;
     }
     public String getTaskName() {
         return taskName;
