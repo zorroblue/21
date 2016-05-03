@@ -26,6 +26,14 @@ public class Task {
         this.dateOfStart=dateOfStart;
         this.noOfCompletedDays=noOfCompletedDays;
     }
+
+    public Task(String taskName,Date dateOfStart,Integer noOfCompletedDays)
+    {
+        this.taskName=taskName;
+        this.dateOfStart=dateOfStart;
+        this.noOfCompletedDays=noOfCompletedDays;
+    }
+
     public String getTaskName() {
         return taskName;
     }
@@ -63,5 +71,11 @@ public class Task {
     {
 
         noOfCompletedDays++;
+    }
+
+    @Override
+    public String toString()
+    {
+        return taskName;
     }
 }

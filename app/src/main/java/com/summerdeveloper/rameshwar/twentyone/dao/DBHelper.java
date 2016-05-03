@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.summerdeveloper.rameshwar.twentyone.model.Task;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -39,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("create table tasks(id INT DEFAULT(NULL), taskDate date ,taskName varchar(40),noOfCompletedDays int, primary key(id));");
+        db.execSQL("create table tasks(id INT AUTO_INCREMENT, taskDate date ,taskName varchar(40),noOfCompletedDays int, primary key(id));");
     }
 
     public ArrayList<Task> getAllTasks()
@@ -51,6 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
         while(cursor.isAfterLast()==false)
         {
             result.add(new Task(cursor.getInt(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("taskName")),new Date(cursor.getString(cursor.getColumnIndex("taskDate"))),cursor.getInt(cursor.getColumnIndex("noOfCompletedDays"))));
+            cursor.moveToNext();
         }
         return result;
     }
@@ -58,11 +60,22 @@ public class DBHelper extends SQLiteOpenHelper {
     public Task getTaskById(Integer Id)
     {
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.rawQuery(new StringBuilder("select * from tasks where id=").append(Id).toString(),null);
+        Cursor cursor=db.rawQuery(new StringBuilder("select * from tasks where id=").append(Id).toString(), null);
         cursor.moveToFirst();
         //only one task will show up
-        return new Task(cursor.getInt(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("taskName")),new Date(cursor.getString(cursor.getColumnIndex("taskDate"))),cursor.getInt(cursor.getColumnIndex("noOfCompletedDays"));
+        return new Task(cursor.getInt(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("taskName")),new Date(new SimpleDateFormat("dd-mm-yyyy").format(cursor.getString(cursor.getColumnIndex("taskDate")))),cursor.getInt(cursor.getColumnIndex("noOfCompletedDays")));
 
     }
-   
+
+    //CRUD Operations
+    public boolean addTask(Task t) {
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            db.execSQL(new StringBuilder("insert into tasks (taskName,taskDate,noOfCompletedDays) values(").append(t.getTaskName()).append(",").append(t.getDateOfStart()).append(",").append(t.getNoOfCompletedDays()).append(";").toString());
+            return true;
+        }catch(Exception e)
+        {
+            return false;
+        }
+    }
 }
