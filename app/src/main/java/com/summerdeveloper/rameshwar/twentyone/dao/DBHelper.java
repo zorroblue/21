@@ -53,7 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
         while(cursor.isAfterLast()==false)
         {
             try {
-                result.add(new Task(cursor.getInt(cursor.getColumnIndex("id")), cursor.getString(cursor.getColumnIndex("taskName")), new SimpleDateFormat("dd-mm-yyyy").parse(cursor.getString(cursor.getColumnIndex("taskDate"))), cursor.getInt(cursor.getColumnIndex("noOfCompletedDays"))));
+                result.add(new Task(cursor.getInt(cursor.getColumnIndex("id")), cursor.getString(cursor.getColumnIndex("taskName")), new SimpleDateFormat("dd-MM-yyyy").parse(cursor.getString(cursor.getColumnIndex("taskDate"))), cursor.getInt(cursor.getColumnIndex("noOfCompletedDays"))));
             }
             catch(Exception e)
             {
@@ -72,7 +72,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //only one task will show up
         try
         {
-            return new Task(cursor.getInt(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("taskName")),new SimpleDateFormat("dd-mm-yyyy").parse(cursor.getString(cursor.getColumnIndex("taskDate"))),cursor.getInt(cursor.getColumnIndex("noOfCompletedDays")));
+            return new Task(cursor.getInt(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("taskName")),new SimpleDateFormat("dd-MM-yyyy").parse(cursor.getString(cursor.getColumnIndex("taskDate"))),cursor.getInt(cursor.getColumnIndex("noOfCompletedDays")));
         }
         catch(Exception e)
         {
@@ -88,7 +88,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("taskName", t.getTaskName());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         contentValues.put("taskDate", sdf.format(t.getDateOfStart()));
         contentValues.put("noOfCompletedDays", t.getNoOfCompletedDays());
         try {

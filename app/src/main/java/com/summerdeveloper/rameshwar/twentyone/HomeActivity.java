@@ -32,10 +32,11 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private CustomAdapter listAdapter;
     private ListView listView;
     private ArrayList<Task> arrayList;
     private DBHelper db=new DBHelper(this);
-    private ArrayAdapter listAdapter;
+    //private ArrayAdapter listAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +59,8 @@ public class HomeActivity extends AppCompatActivity
 
         arrayList = db.getAllTasks();
         //   arrayList.add(new Task());
-        listAdapter = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1, arrayList);
+      //  listAdapter = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1, arrayList);
+        listAdapter=new CustomAdapter(arrayList,HomeActivity.this);
         listView.setAdapter(listAdapter);
 
 
