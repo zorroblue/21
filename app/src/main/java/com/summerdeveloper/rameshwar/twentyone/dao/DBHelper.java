@@ -97,7 +97,18 @@ public class DBHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             return false;
         }
+    }
 
+    public void remove(Integer id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.execSQL(new StringBuilder("delete from tasks where id =").append(id).toString());
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
 

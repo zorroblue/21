@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.RecyclerView;
+import android.text.method.CharacterPickerDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -30,6 +34,8 @@ public class HomeActivity extends AppCompatActivity
 
     private ListView listView;
     private ArrayList<Task> arrayList;
+    private DBHelper db=new DBHelper(this);
+    private ArrayAdapter listAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +54,47 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        listView=(ListView)findViewById(R.id.list);
-        DBHelper db=new DBHelper(this);
-        arrayList=db.getAllTasks();
-     //   arrayList.add(new Task());
-        ListAdapter listAdapter=new ArrayAdapter<Task>(this,android.R.layout.simple_list_item_1, arrayList);
+        listView = (ListView) findViewById(R.id.list);
+
+        arrayList = db.getAllTasks();
+        //   arrayList.add(new Task());
+        listAdapter = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(listAdapter);
 
-        listView.setOnLongClickListener(new View.OnLongClickListener() {
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("DEBUG", "Long pressed");
+                final int pos = position;
+
+                new AlertDialog.Builder(HomeActivity.this)
+                        .setMessage("Do you wish to remove this task?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Integer id = arrayList.get(pos).getTaskID();
+                                arrayList.remove(pos);
+                                db.remove(pos);
+                                listAdapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("NO",new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        return;
+                                    }
+                                }
+                        )
+                        .show();
+                return false;
+            }
+
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             }
         });

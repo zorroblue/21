@@ -11,6 +11,11 @@ public class Task {
     private Integer taskID;
     private String taskName;
     private Date dateOfStart;
+
+    public Integer getTaskID() {
+        return taskID;
+    }
+
     private Integer noOfCompletedDays;
 
     public Task()
