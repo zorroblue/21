@@ -1,5 +1,8 @@
 package com.summerdeveloper.rameshwar.twentyone;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +29,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView listView;
+    private ArrayList<Task> arrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +37,7 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -53,10 +50,18 @@ public class HomeActivity extends AppCompatActivity
 
         listView=(ListView)findViewById(R.id.list);
         DBHelper db=new DBHelper(this);
-        ArrayList<Task> arrayList=db.getAllTasks();
+        arrayList=db.getAllTasks();
      //   arrayList.add(new Task());
         ListAdapter listAdapter=new ArrayAdapter<Task>(this,android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(listAdapter);
+
+        listView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                
+
+            }
+        });
     }
 
     @Override
@@ -99,6 +104,23 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_addtask) {
             // Handle add task
+            if(arrayList!=null)
+            {
+                if(arrayList.size()>=10)
+                {
+                    new AlertDialog.Builder(HomeActivity.this)
+                            .setTitle("Alert")
+                            .setMessage("There are already 10 activities! Too many cooks spoil the broth :)")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    return;
+                                }
+                            })
+                            .show();
+                }
+            }
             Intent i=new Intent(getApplicationContext(),AddTask.class);
             startActivity(i);
         } else if (id == R.id.nav_removetask) {

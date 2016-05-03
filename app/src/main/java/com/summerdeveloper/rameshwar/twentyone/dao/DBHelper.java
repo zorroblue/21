@@ -1,5 +1,6 @@
 package com.summerdeveloper.rameshwar.twentyone.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
@@ -51,7 +52,13 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         while(cursor.isAfterLast()==false)
         {
-            result.add(new Task(cursor.getInt(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("taskName")),new Date(cursor.getString(cursor.getColumnIndex("taskDate"))),cursor.getInt(cursor.getColumnIndex("noOfCompletedDays"))));
+            try {
+                result.add(new Task(cursor.getInt(cursor.getColumnIndex("id")), cursor.getString(cursor.getColumnIndex("taskName")), new SimpleDateFormat("dd-mm-yyyy").parse(cursor.getString(cursor.getColumnIndex("taskDate"))), cursor.getInt(cursor.getColumnIndex("noOfCompletedDays"))));
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
             cursor.moveToNext();
         }
         return result;
@@ -63,19 +70,34 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor=db.rawQuery(new StringBuilder("select * from tasks where id=").append(Id).toString(), null);
         cursor.moveToFirst();
         //only one task will show up
-        return new Task(cursor.getInt(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("taskName")),new Date(new SimpleDateFormat("dd-mm-yyyy").format(cursor.getString(cursor.getColumnIndex("taskDate")))),cursor.getInt(cursor.getColumnIndex("noOfCompletedDays")));
+        try
+        {
+            return new Task(cursor.getInt(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("taskName")),new SimpleDateFormat("dd-mm-yyyy").parse(cursor.getString(cursor.getColumnIndex("taskDate"))),cursor.getInt(cursor.getColumnIndex("noOfCompletedDays")));
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+
 
     }
 
     //CRUD Operations
     public boolean addTask(Task t) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("taskName", t.getTaskName());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+        contentValues.put("taskDate", sdf.format(t.getDateOfStart()));
+        contentValues.put("noOfCompletedDays", t.getNoOfCompletedDays());
         try {
-            SQLiteDatabase db = this.getReadableDatabase();
-            db.execSQL(new StringBuilder("insert into tasks (taskName,taskDate,noOfCompletedDays) values(").append(t.getTaskName()).append(",").append(t.getDateOfStart()).append(",").append(t.getNoOfCompletedDays()).append(";").toString());
+            db.insert("tasks", null, contentValues);
             return true;
-        }catch(Exception e)
-        {
+        } catch (Exception e) {
             return false;
         }
+
     }
 }
+
