@@ -41,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("create table tasks(id INT AUTO_INCREMENT, taskDate date ,taskName varchar(40),noOfCompletedDays int, primary key(id));");
+        db.execSQL("create table tasks(id varchar(50), taskDate date ,taskName varchar(40),noOfCompletedDays int, primary key(id));");
     }
 
     public ArrayList<Task> getAllTasks()
@@ -53,7 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
         while(cursor.isAfterLast()==false)
         {
             try {
-                result.add(new Task(cursor.getInt(cursor.getColumnIndex("id")), cursor.getString(cursor.getColumnIndex("taskName")), new SimpleDateFormat("dd-MM-yyyy").parse(cursor.getString(cursor.getColumnIndex("taskDate"))), cursor.getInt(cursor.getColumnIndex("noOfCompletedDays"))));
+                result.add(new Task(cursor.getString(cursor.getColumnIndex("id")), cursor.getString(cursor.getColumnIndex("taskName")), new SimpleDateFormat("dd-MM-yyyy").parse(cursor.getString(cursor.getColumnIndex("taskDate"))), cursor.getInt(cursor.getColumnIndex("noOfCompletedDays"))));
             }
             catch(Exception e)
             {
@@ -72,7 +72,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //only one task will show up
         try
         {
-            return new Task(cursor.getInt(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("taskName")),new SimpleDateFormat("dd-MM-yyyy").parse(cursor.getString(cursor.getColumnIndex("taskDate"))),cursor.getInt(cursor.getColumnIndex("noOfCompletedDays")));
+            return new Task(cursor.getString(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("taskName")),new SimpleDateFormat("dd-MM-yyyy").parse(cursor.getString(cursor.getColumnIndex("taskDate"))),cursor.getInt(cursor.getColumnIndex("noOfCompletedDays")));
         }
         catch(Exception e)
         {
@@ -87,6 +87,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean addTask(Task t) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put("id",t.getTaskID());
         contentValues.put("taskName", t.getTaskName());
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         contentValues.put("taskDate", sdf.format(t.getDateOfStart()));

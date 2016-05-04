@@ -24,13 +24,13 @@
         android:id="@+id/row_taskDate"
         />
     <ProgressBar
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/row_progress"
-        android:layout_alignParentRight="true"
+        android:layout_below="@id/row_taskDate"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_toRightOf="@+id/row_taskName"
-        android:layout_toEndOf="@+id/row_taskName" />
+        />
+
 
 
 </RelativeLayout>

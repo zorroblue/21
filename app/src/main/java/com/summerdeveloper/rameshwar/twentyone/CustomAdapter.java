@@ -10,10 +10,11 @@ import android.widget.TextView;
 
 import com.summerdeveloper.rameshwar.twentyone.model.Task;
 
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by rameshwar on 3/5/16.
@@ -51,14 +52,28 @@ public class CustomAdapter extends BaseAdapter {
         TextView taskName=(TextView)convertView.findViewById(R.id.row_taskName);
         TextView taskDate=(TextView)convertView.findViewById(R.id.row_taskDate);
         ProgressBar progressBar=(ProgressBar)convertView.findViewById(R.id.row_progress);
+        Date to=new Date();
+        Date from=task.getDateOfStart();
+        if(TimeUnit.MILLISECONDS.toDays(from.getTime()-to.getTime())==task.getNoOfCompletedDays())
+            progressBar.setProgress((task.getNoOfCompletedDays()));
+        else
+        {
+            //TODO add notifications about the task failing
+            fail();
 
-        progressBar.setProgress((42+task.getNoOfCompletedDays())/21);
-        progressBar.setMax(100);
+        }
+        progressBar.setMax(21);
         progressBar.setIndeterminate(false);
         taskName.setText(task.getTaskName());
         taskDate.setText(new SimpleDateFormat("dd-MM-yyyy").format(task.getDateOfStart()));
         return convertView;
 
+
+    }
+    //TODO
+    //The function that resets stuff and sends notifications to the user
+    public void fail()
+    {
 
     }
 }

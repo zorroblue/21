@@ -76,7 +76,7 @@ public class HomeActivity extends AppCompatActivity
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Integer id = arrayList.get(pos).getTaskID();
+                                String id = arrayList.get(pos).getTaskID();
                                 arrayList.remove(pos);
                                 db.remove(pos);
                                 listAdapter.notifyDataSetChanged();
@@ -97,7 +97,9 @@ public class HomeActivity extends AppCompatActivity
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent i=new Intent(getApplicationContext(),DetailActivity.class);
+                i.putExtra("taskID",arrayList.get(position).getTaskID());
+                startActivity(i);
             }
         });
     }

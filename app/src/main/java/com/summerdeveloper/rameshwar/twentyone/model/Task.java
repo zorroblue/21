@@ -8,11 +8,11 @@ import java.util.UUID;
  */
 public class Task {
 
-    private Integer taskID;
+    private String taskID;
     private String taskName;
     private Date dateOfStart;
 
-    public Integer getTaskID() {
+    public String getTaskID() {
         return taskID;
     }
 
@@ -24,7 +24,7 @@ public class Task {
         noOfCompletedDays=0;
     }
 
-    public Task(Integer taskID,String taskName,Date dateOfStart,Integer noOfCompletedDays)
+    public Task(String taskID,String taskName,Date dateOfStart,Integer noOfCompletedDays)
     {
         this.taskID=taskID;
         this.taskName=taskName;
@@ -34,6 +34,7 @@ public class Task {
 
     public Task(String taskName,Date dateOfStart,Integer noOfCompletedDays)
     {
+        taskID=UUID.randomUUID().toString();
         this.taskName=taskName;
         this.dateOfStart=dateOfStart;
         this.noOfCompletedDays=noOfCompletedDays;
