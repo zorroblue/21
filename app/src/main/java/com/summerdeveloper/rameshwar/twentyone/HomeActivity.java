@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialog, int which) {
                                 String id = arrayList.get(pos).getTaskID();
                                 arrayList.remove(pos);
-                                db.remove(pos);
+                                db.remove(id);
                                 listAdapter.notifyDataSetChanged();
                             }
                         })

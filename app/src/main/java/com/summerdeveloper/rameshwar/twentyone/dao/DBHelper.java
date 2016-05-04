@@ -41,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("create table tasks(id varchar(50), taskDate date ,taskName varchar(40),noOfCompletedDays int, primary key(id));");
+        db.execSQL("create table tasks(id varchar(100), taskDate date ,taskName varchar(40),noOfCompletedDays int, primary key(id));");
     }
 
     public ArrayList<Task> getAllTasks()
@@ -64,10 +64,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public Task getTaskById(Integer Id)
+    public Task getTaskById(String Id)
     {
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.rawQuery(new StringBuilder("select * from tasks where id=").append(Id).toString(), null);
+        Cursor cursor=db.rawQuery(new StringBuilder("select * from tasks where id=\'").append(Id).append("\'").toString(), null);
         cursor.moveToFirst();
         //only one task will show up
         try
@@ -100,16 +100,26 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void remove(Integer id) {
+    public void remove(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-            db.execSQL(new StringBuilder("delete from tasks where id =").append(id).toString());
+            db.execSQL(new StringBuilder("delete from tasks where id =\'").append(id).append("\'").toString());
 
         }
         catch(Exception e)
         {
             e.printStackTrace();
         }
+    }
+
+    public boolean hasMarkedForTheDay(Task task)
+    {
+        Date dt2=new Date();
+        int diffInDays = (int) ((dt2.getTime() - task.getDateOfStart().getTime()) / (1000 * 60 * 60 * 24));
+        if(diffInDays+1==task.getNoOfCompletedDays()) //has marked
+            return true;
+        else
+            return false;
     }
 }
 
