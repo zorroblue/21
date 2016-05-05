@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -21,6 +22,7 @@ public class DetailActivity extends AppCompatActivity {
     private Task task;
     private TextView tvAmDone,tvHeading,tvNoDaysnumber;
     private CheckBox checkBox;
+    private DBHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +30,7 @@ public class DetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Bundle bundle=getIntent().getExtras();
-        DBHelper db=new DBHelper(this);
+        db=new DBHelper(this);
         task=db.getTaskById(bundle.getString("taskID"));
         tvHeading=(TextView)findViewById(R.id.tvHeading);
         tvHeading.setText(task.getTaskName());
@@ -43,13 +45,18 @@ public class DetailActivity extends AppCompatActivity {
                 if(isChecked)
                 {
                     checkBox.setEnabled(false);
+                    db.incrementTask(task);
+                    tvNoDaysnumber.setText(task.getNoOfCompletedDays().toString());
                 }
             }
         });
-
-
-
-
+        if(db.hasMarkedForTheDay(task))
+        {
+            //User cannot change the choice
+            checkBox.setVisibility(View.INVISIBLE);
+            tvAmDone.setVisibility(View.INVISIBLE);
+        }
+        Log.d("DEBUG",task.getNoOfCompletedDays().toString());
 
     }
 

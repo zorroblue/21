@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.summerdeveloper.rameshwar.twentyone.dao.DBHelper;
 import com.summerdeveloper.rameshwar.twentyone.model.Task;
@@ -37,13 +38,14 @@ public class HomeActivity extends AppCompatActivity
     private ArrayList<Task> arrayList;
     private DBHelper db=new DBHelper(this);
     //private ArrayAdapter listAdapter;
+    private TextView tvMessage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        tvMessage=(TextView)findViewById(R.id.tvMessage);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -58,6 +60,17 @@ public class HomeActivity extends AppCompatActivity
         listView = (ListView) findViewById(R.id.list);
 
         arrayList = db.getAllTasks();
+        if(arrayList==null || arrayList.size()==0)
+        {
+            tvMessage.setVisibility(View.VISIBLE);
+            tvMessage.setText("There are no tasks yet");
+            listView.setVisibility(View.GONE);
+        }
+        else
+        {
+            tvMessage.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+        }
         //   arrayList.add(new Task());
       //  listAdapter = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1, arrayList);
         listAdapter=new CustomAdapter(arrayList,HomeActivity.this);
@@ -82,7 +95,7 @@ public class HomeActivity extends AppCompatActivity
                                 listAdapter.notifyDataSetChanged();
                             }
                         })
-                        .setNegativeButton("NO",new DialogInterface.OnClickListener() {
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         return;
@@ -94,14 +107,21 @@ public class HomeActivity extends AppCompatActivity
             }
 
         });
+
+        //TODO: Fix bug of ItemClick being called even on long click
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i=new Intent(getApplicationContext(),DetailActivity.class);
                 i.putExtra("taskID",arrayList.get(position).getTaskID());
                 startActivity(i);
+                //update progress
+                listAdapter.notifyDataSetChanged();
+                listAdapter.notifyDataSetChanged();
+
             }
         });
+
     }
 
     @Override

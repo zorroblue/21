@@ -116,10 +116,17 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         Date dt2=new Date();
         int diffInDays = (int) ((dt2.getTime() - task.getDateOfStart().getTime()) / (1000 * 60 * 60 * 24));
-        if(diffInDays+1==task.getNoOfCompletedDays()) //has marked
+        if(diffInDays+1<=task.getNoOfCompletedDays()) //has marked
             return true;
         else
             return false;
     }
+    public void incrementTask(Task task)
+    {
+        task.setNoOfCompletedDays(task.getNoOfCompletedDays()+1);
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.execSQL(new StringBuilder("update tasks set noOfCompletedDays=noOfCompletedDays+1 where id=\'").append(task.getTaskID()).append("\'").toString());
+    }
 }
+
 
