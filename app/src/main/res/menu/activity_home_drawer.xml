@@ -4,19 +4,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_addtask"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_add"
             android:title="Add task" />
         <item
             android:id="@+id/nav_removetask"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_clear"
             android:title="Remove task" />
-        <item
-            android:id="@+id/nav_viewhistory"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="View history" />
+
         <item
             android:id="@+id/nav_viewprogress"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_slideshow"
             android:title="View progress" />
     </group>
 

@@ -195,8 +195,6 @@ public class HomeActivity extends AppCompatActivity
             startActivity(i);
         } else if (id == R.id.nav_removetask) {
 
-        } else if (id == R.id.nav_viewhistory) {
-
         } else if (id == R.id.nav_viewprogress) {
 
         } else if (id == R.id.nav_rate) {

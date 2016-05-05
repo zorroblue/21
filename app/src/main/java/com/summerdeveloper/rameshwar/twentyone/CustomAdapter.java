@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.summerdeveloper.rameshwar.twentyone.dao.DBHelper;
 import com.summerdeveloper.rameshwar.twentyone.model.Task;
 
 
@@ -23,7 +24,6 @@ public class CustomAdapter extends BaseAdapter {
 
     private ArrayList<Task> tasks;
     private Context context;
-
     CustomAdapter(ArrayList<Task> tasks,Context context)
     {
         this.tasks=tasks;
@@ -54,14 +54,13 @@ public class CustomAdapter extends BaseAdapter {
         ProgressBar progressBar=(ProgressBar)convertView.findViewById(R.id.row_progress);
         Date to=new Date();
         Date from=task.getDateOfStart();
-        if(TimeUnit.MILLISECONDS.toDays(from.getTime()-to.getTime())==task.getNoOfCompletedDays())
-            progressBar.setProgress((task.getNoOfCompletedDays()));
-        else
-        {
+        progressBar.setProgress((task.getNoOfCompletedDays()));
+        //else
+        //{
             //TODO add notifications about the task failing
-            fail();
+          //  fail();
 
-        }
+        //}
         progressBar.setMax(21);
         progressBar.setIndeterminate(false);
         taskName.setText(task.getTaskName());
