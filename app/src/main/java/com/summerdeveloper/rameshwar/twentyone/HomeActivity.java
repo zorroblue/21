@@ -29,6 +29,8 @@ import com.summerdeveloper.rameshwar.twentyone.dao.DBHelper;
 import com.summerdeveloper.rameshwar.twentyone.model.Task;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,7 +61,15 @@ public class HomeActivity extends AppCompatActivity
 
         listView = (ListView) findViewById(R.id.list);
 
+//        Calendar calendar= Calendar.getInstance();
+//        calendar.add(Calendar.DATE, -1);
+//
+//        Task tb=new Task("asass","Raju",calendar.getTime(),1);
+//        db.addTask(tb);
+
         arrayList = db.getAllTasks();
+
+
         if(arrayList==null || arrayList.size()==0)
         {
             tvMessage.setVisibility(View.VISIBLE);
@@ -103,7 +113,7 @@ public class HomeActivity extends AppCompatActivity
                                 }
                         )
                         .show();
-                return false;
+                return true;
             }
 
         });
@@ -113,7 +123,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i=new Intent(getApplicationContext(),DetailActivity.class);
-                i.putExtra("taskID",arrayList.get(position).getTaskID());
+                i.putExtra("taskID", arrayList.get(position).getTaskID());
                 startActivity(i);
                 //update progress
                 listAdapter.notifyDataSetChanged();
