@@ -4,7 +4,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +30,7 @@ import android.widget.TextView;
 
 import com.summerdeveloper.rameshwar.twentyone.dao.DBHelper;
 import com.summerdeveloper.rameshwar.twentyone.model.Task;
+import com.summerdeveloper.rameshwar.twentyone.onboard.OnBoardActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +44,7 @@ public class HomeActivity extends AppCompatActivity
     private ArrayList<Task> arrayList;
     private DBHelper db=new DBHelper(this);
     //private ArrayAdapter listAdapter;
+
     private TextView tvMessage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,18 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         tvMessage=(TextView)findViewById(R.id.tvMessage);
 
+        /* The below line is used to TEST the onboarding expreience */
+       // PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().clear().apply();
+
+        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(!preferences.getBoolean("onboarding_complete",false))
+        {
+            Intent i=new Intent(this, OnBoardActivity.class);
+            startActivity(i);
+            finish();
+            return;
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -61,11 +78,7 @@ public class HomeActivity extends AppCompatActivity
 
         listView = (ListView) findViewById(R.id.list);
 
-//        Calendar calendar= Calendar.getInstance();
-//        calendar.add(Calendar.DATE, -1);
-//
-//        Task tb=new Task("asass","Raju",calendar.getTime(),1);
-//        db.addTask(tb);
+
 
         arrayList = db.getAllTasks();
 
@@ -81,8 +94,7 @@ public class HomeActivity extends AppCompatActivity
             tvMessage.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
         }
-        //   arrayList.add(new Task());
-      //  listAdapter = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1, arrayList);
+
         listAdapter=new CustomAdapter(arrayList,HomeActivity.this);
         listView.setAdapter(listAdapter);
 
@@ -116,9 +128,9 @@ public class HomeActivity extends AppCompatActivity
                 return true;
             }
 
+
         });
 
-        //TODO: Fix bug of ItemClick being called even on long click
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -127,11 +139,22 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(i);
                 //update progress
                 listAdapter.notifyDataSetChanged();
-                listAdapter.notifyDataSetChanged();
 
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==1)
+        {
+            if(resultCode==RESULT_OK)
+            {
+                final Uri updated=data.getData();
+                Log.d("Here","Here");
+            }
+        }
     }
 
     @Override

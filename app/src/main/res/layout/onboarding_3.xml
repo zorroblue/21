@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@mipmap/blurredimage"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Keep adding new tasks and on completing that target for that day, mark it on the app. After consecutive 21 days of observing that habit, you will notice the differences!"
+        android:textSize="22sp"
+        android:id="@+id/tv24"
+        android:textColor="#ffffff"
+        android:layout_marginTop="50dp"/>
+
+
+
+</LinearLayout>

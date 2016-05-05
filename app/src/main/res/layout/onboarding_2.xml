@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@mipmap/blurredimage"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv23"
+        android:text="TwentyOne is an app that will help you make a new habit, or help you lose bad habits.\n \nIn just 21 days of patience and determination! :)"
+        android:textColor="#ffffff"
+        android:textSize="22sp"
+        android:textAlignment="center"
+        android:textStyle="italic"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"/>
+
+
+
+</LinearLayout>

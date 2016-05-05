@@ -28,22 +28,21 @@
         android:text="Number of completed days: "
         android:id="@+id/tvNoDays"
         android:layout_below="@+id/tvHeading"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+
         android:layout_marginTop="49dp"
-        android:layout_toLeftOf="@+id/tvHeading"
-        android:layout_toStartOf="@+id/tvHeading" />
+        android:layout_marginLeft="10dp"
+         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/tvNoDaysnumber"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+
         android:layout_alignBottom="@+id/tvNoDays"
-        android:layout_toRightOf="@+id/tvHeading"
-        android:layout_toEndOf="@+id/tvHeading" />
+        android:layout_toRightOf="@id/tvNoDays"
+        android:layout_marginRight="10dp"
+         />
 
     <TextView
         android:layout_width="wrap_content"

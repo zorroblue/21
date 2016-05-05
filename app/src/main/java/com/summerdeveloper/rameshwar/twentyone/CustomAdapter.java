@@ -76,6 +76,7 @@ public class CustomAdapter extends BaseAdapter {
 
     }
 
+    //TODO : Fix bug of the progress bar not updating.
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();

@@ -19,6 +19,7 @@ import org.w3c.dom.Text;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private Intent intent;
     private Task task;
     private TextView tvAmDone,tvHeading,tvNoDaysnumber;
     private CheckBox checkBox;
@@ -39,6 +40,8 @@ public class DetailActivity extends AppCompatActivity {
         tvNoDaysnumber.setText(task.getNoOfCompletedDays().toString());
         checkBox=(CheckBox)findViewById(R.id.checkBox);
         checkBox.setChecked(db.hasMarkedForTheDay(task));
+        intent=new Intent();
+        //setResult(RESULT_OK,intent);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -47,6 +50,8 @@ public class DetailActivity extends AppCompatActivity {
                     checkBox.setEnabled(false);
                     db.incrementTask(task);
                     tvNoDaysnumber.setText(task.getNoOfCompletedDays().toString());
+                    intent.putExtra("boolresult",true);
+
                 }
             }
         });
@@ -55,6 +60,8 @@ public class DetailActivity extends AppCompatActivity {
             //User cannot change the choice
             checkBox.setVisibility(View.INVISIBLE);
             tvAmDone.setVisibility(View.INVISIBLE);
+            intent.putExtra("boolresult",true);
+
         }
         Log.d("DEBUG",task.getNoOfCompletedDays().toString());
 
