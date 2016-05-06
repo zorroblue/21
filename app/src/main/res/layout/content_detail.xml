@@ -28,9 +28,10 @@
         android:text="Number of completed days: "
         android:id="@+id/tvNoDays"
         android:layout_below="@+id/tvHeading"
-
+        android:textSize="20dp"
         android:layout_marginTop="49dp"
         android:layout_marginLeft="10dp"
+        android:textStyle="bold"
          />
 
     <TextView
@@ -38,10 +39,12 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/tvNoDaysnumber"
+        android:textSize="20dp"
+        android:textStyle="bold"
 
         android:layout_alignBottom="@+id/tvNoDays"
         android:layout_toRightOf="@id/tvNoDays"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="5dp"
          />
 
     <TextView
@@ -52,8 +55,32 @@
         android:id="@+id/tvAmDone"
         android:layout_marginTop="85dp"
         android:layout_below="@+id/tvNoDays"
+        android:textStyle="bold"
+        android:textSize="20dp"
         android:layout_alignRight="@+id/tvNoDays"
         android:layout_alignEnd="@+id/tvNoDays" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView4"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_below="@id/tvNoDays"
+        android:layout_alignLeft="@+id/tvNoDays"
+        android:layout_alignStart="@+id/tvNoDays" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView5"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_below="@id/textView4"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -61,8 +88,10 @@
         android:id="@+id/checkBox"
         android:layout_alignBottom="@+id/tvAmDone"
         android:layout_alignRight="@+id/tvNoDaysnumber"
-        android:layout_alignEnd="@+id/tvNoDaysnumber"
+
         android:checked="false"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="60dp"
         android:layout_alignTop="@+id/tvAmDone" />
+
+
 </RelativeLayout>

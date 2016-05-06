@@ -1,6 +1,7 @@
 package com.summerdeveloper.rameshwar.twentyone;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         Task task=tasks.get(position);
         convertView = LayoutInflater.from(context).inflate(R.layout.row,null);
         TextView taskName=(TextView)convertView.findViewById(R.id.row_taskName);
@@ -54,6 +56,11 @@ public class CustomAdapter extends BaseAdapter {
         ProgressBar progressBar=(ProgressBar)convertView.findViewById(R.id.row_progress);
         Date to=new Date();
         Date from=task.getDateOfStart();
+        if (position % 2 == 1) {
+            convertView.setBackgroundColor(Color.parseColor("#E0E0E0"));
+        } else {
+            convertView.setBackgroundColor(Color.parseColor("#EEEEEE"));
+        }
         progressBar.setProgress((task.getNoOfCompletedDays()));
         //else
         //{

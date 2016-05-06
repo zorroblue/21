@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.summerdeveloper.rameshwar.twentyone.dao.DBHelper;
@@ -36,15 +37,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private CustomAdapter listAdapter;
     private ListView listView;
     private ArrayList<Task> arrayList;
     private DBHelper db=new DBHelper(this);
     //private ArrayAdapter listAdapter;
-
+    private  ProgressBar progressBar;
+    private Task task;
     private TextView tvMessage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +78,7 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         listView = (ListView) findViewById(R.id.list);
-
-
-
         arrayList = db.getAllTasks();
-
-
         if(arrayList==null || arrayList.size()==0)
         {
             tvMessage.setVisibility(View.VISIBLE);
@@ -135,10 +131,16 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i=new Intent(getApplicationContext(),DetailActivity.class);
-                i.putExtra("taskID", arrayList.get(position).getTaskID());
-                startActivity(i);
+                task=arrayList.get(position);
+                i.putExtra("taskID", task.getTaskID());
+                i.putExtra("position",position);
+                progressBar=(ProgressBar)view.findViewById(R.id.row_progress);
+                Log.d("DEBUG","Before");
+                startActivityForResult(i,1);
+                Log.d("DEBUG","After");
+
                 //update progress
-                listAdapter.notifyDataSetChanged();
+               // listAdapter.notifyDataSetChanged();
 
             }
         });
@@ -147,14 +149,9 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==1)
-        {
-            if(resultCode==RESULT_OK)
-            {
-                final Uri updated=data.getData();
-                Log.d("Here","Here");
-            }
-        }
+        super.onActivityResult(requestCode, resultCode, data);
+        if(progressBar!=null && task!=null)
+            progressBar.setProgress(task.getNoOfCompletedDays());
     }
 
     @Override
@@ -180,12 +177,6 @@ public class HomeActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -212,6 +203,7 @@ public class HomeActivity extends AppCompatActivity
                                 }
                             })
                             .show();
+                    return true;
                 }
             }
             Intent i=new Intent(getApplicationContext(),AddTask.class);
