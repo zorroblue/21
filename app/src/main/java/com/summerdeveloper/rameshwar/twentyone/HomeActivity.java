@@ -28,6 +28,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.summerdeveloper.rameshwar.twentyone.dao.DBHelper;
 import com.summerdeveloper.rameshwar.twentyone.model.Task;
@@ -56,7 +57,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         tvMessage=(TextView)findViewById(R.id.tvMessage);
 
         /* The below line is used to TEST the onboarding expreience */
-       // PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().clear().apply();
+        //PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().clear().apply();
 
         SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -209,7 +210,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Intent i=new Intent(getApplicationContext(),AddTask.class);
             startActivity(i);
         } else if (id == R.id.nav_removetask) {
-
+            Toast.makeText(this,"Long Press the task you want to delete",Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_viewprogress) {
 
         } else if (id == R.id.nav_rate) {
