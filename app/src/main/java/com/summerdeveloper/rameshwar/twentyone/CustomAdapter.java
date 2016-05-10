@@ -61,13 +61,9 @@ public class CustomAdapter extends BaseAdapter {
         } else {
             convertView.setBackgroundColor(Color.parseColor("#EEEEEE"));
         }
-        progressBar.setProgress((task.getNoOfCompletedDays()));
-        //else
-        //{
-            //TODO add notifications about the task failing
-          //  fail();
 
-        //}
+        progressBar.setProgress((task.getNoOfCompletedDays()));
+
         progressBar.setMax(21);
         progressBar.setIndeterminate(false);
         taskName.setText(task.getTaskName());
@@ -76,12 +72,7 @@ public class CustomAdapter extends BaseAdapter {
 
 
     }
-    //TODO
-    //The function that resets stuff and sends notifications to the user
-    public void fail()
-    {
 
-    }
 
     //TODO : Fix bug of the progress bar not updating.
     @Override

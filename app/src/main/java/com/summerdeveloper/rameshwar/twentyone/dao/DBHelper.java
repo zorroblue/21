@@ -112,15 +112,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean hasMarkedForTheDay(Task task)
-    {
-        Date dt2=new Date();
-        int diffInDays = (int) ((dt2.getTime() - task.getDateOfStart().getTime()) / (1000 * 60 * 60 * 24));
-        if(diffInDays+1<=task.getNoOfCompletedDays()) //has marked
-            return true;
-        else
-            return false;
-    }
+
     public void incrementTask(Task task)
     {
         task.setNoOfCompletedDays(task.getNoOfCompletedDays()+1);

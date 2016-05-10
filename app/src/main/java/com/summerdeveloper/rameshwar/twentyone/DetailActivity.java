@@ -53,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         tvStartDate.setText(new StringBuilder("Start Date :    ").append(date));
         tvNoDaysnumber.setText(task.getNoOfCompletedDays().toString());
         checkBox = (CheckBox) findViewById(R.id.checkBox);
-        checkBox.setChecked(db.hasMarkedForTheDay(task));
+        checkBox.setChecked(task.hasMarkedForTheDay());
         //intent=new Intent();
         //intent.putExtra("position", getIntent().getExtras().getString("position"));
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -68,7 +68,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
-        if (db.hasMarkedForTheDay(task)) {
+        if (task.hasMarkedForTheDay()) {
             //User cannot change the choice
             checkBox.setVisibility(View.INVISIBLE);
             tvAmDone.setVisibility(View.INVISIBLE);

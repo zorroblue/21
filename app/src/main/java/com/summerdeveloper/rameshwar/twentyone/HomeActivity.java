@@ -2,6 +2,7 @@ package com.summerdeveloper.rameshwar.twentyone;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -143,8 +144,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 //update progress
                // listAdapter.notifyDataSetChanged();
 
+                if(task.isTaskCompleted())
+                {
+                    completed();
+                }
+                else if(!task.hasMarkedForTheDay())
+                {
+                    
+                }
+
             }
         });
+
+    }
+
+    //TODO
+    //The function that resets stuff and sends notifications to the user
+    public void fail()
+    {
+
+    }
+
+    public void completed()
+    {
 
     }
 

@@ -79,6 +79,16 @@ public class Task {
         noOfCompletedDays++;
     }
 
+    public boolean hasMarkedForTheDay()
+    {
+        Date dt2=new Date();
+        int diffInDays = (int) ((dt2.getTime() - this.getDateOfStart().getTime()) / (1000 * 60 * 60 * 24));
+        if(diffInDays+1<=this.getNoOfCompletedDays()) //has marked
+            return true;
+        else
+            return false;
+    }
+
     @Override
     public String toString()
     {
