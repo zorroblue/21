@@ -1,3 +1,5 @@
+#Twenty One
+
 TwentyOne is an Android app that aims to help you make new habits and break unwanted ones. 
 The app is based on a popular idea that if you do an activity for 21 days at a stretch, it tends to become a habit. This is so because the human mind is wired to follow habits.
 
@@ -7,3 +9,6 @@ The app is based on a popular idea that if you do an activity for 21 days at a s
 
 Clicking the Navigational drawer helps you to add tasks or monitor your progress.
 
+##TODO
+- [ ] Introduce graphing to track progress.
+- [ ] Make a fail notification better.
